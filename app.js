@@ -2,8 +2,8 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 
-const authRouter = require('./routes/api/auth');
-const users = require('./routes/api/users');
+const { authRouter } = require('./routes');
+const { URL } = require('./libs');
 
 const app = express();
 
@@ -13,10 +13,11 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
-///
-app.use('/api/auth', authRouter);
 
 const { notFound, serverError } = require('./libs/http-responses');
+
+
+app.use(URL.users, authRouter);
 
 app.use((req, res) => {
   res.status(notFound.code).json({ message: notFound.status });

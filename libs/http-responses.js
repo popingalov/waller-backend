@@ -19,6 +19,10 @@ const HTTP_RESPONSES = {
     code: 400,
     status: error => `${error.details[0].message}`,
   },
+  badRequest: {
+    code: 400,
+    status: 'bad request',
+},
   badAuth: {
     code: 401,
     status: 'Not authorized',
@@ -27,9 +31,9 @@ const HTTP_RESPONSES = {
     code: 404,
     status: id => `Id ${id} not found`,
   },
-  сonflict: {
+  inUse: {
     code: 409,
-    status: mail => `Email ${mail} in use`,
+    status: 'Email in use'
   },
   serverError: {
     code: 500,

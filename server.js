@@ -8,10 +8,10 @@ mongoose
   .connect(DB_HOST)
   .then(() =>
     app.listen(PORT, () => {
-      console.log('Database tru and we listen port 4000');
+      console.log('Database try and we listen port 4000');
     }),
   )
   .catch(error => {
-    console.log('Ой-йо-йой', error.message);
+    console.log('Error', error.message);
     process.exit(1);
   });

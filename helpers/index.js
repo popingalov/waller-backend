@@ -1,5 +1,5 @@
-const sendSucc = require('./sendSucc');
+const authValidator = require('./validators/auth-validator');
 
 module.exports = {
-  sendSucc,
-};
+    authValidator
+}

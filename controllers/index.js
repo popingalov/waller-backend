@@ -1,5 +1,5 @@
-const contacts = require('./contacts');
-const auth = require('./auth');
-const atherUserAction = require('./atherUserAction');
+const { authHandler } = require('./user');
 
-module.exports = { contacts, auth, atherUserAction };
+module.exports = {
+    authHandler
+}
