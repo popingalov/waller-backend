@@ -1,22 +1,25 @@
-const express = require('express');
-const logger = require('morgan');
-const cors = require('cors');
+const express = require("express");
+const logger = require("morgan");
+const cors = require("cors");
 
-const authRouter = require('./routes/api/auth');
-const users = require('./routes/api/users');
+const authRouter = require("./routes/api/auth");
+const transactionsRouter = require("./routes/api/transactions");
+const users = require("./routes/api/users");
 
 const app = express();
 
-const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 ///
-app.use('/api/auth', authRouter);
+app.use("/api/auth", authRouter);
+app.use('/api/transactions', transactionsRouter);
 
-const { notFound, serverError } = require('./libs/http-responses');
+
+const { notFound, serverError } = require("./libs/http-responses");
 
 app.use((req, res) => {
   res.status(notFound.code).json({ message: notFound.status });
