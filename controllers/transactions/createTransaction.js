@@ -4,7 +4,7 @@ const { created, badValid } = require("./libs/http-responses");
 
 const createTransaction = async (req, res, next) => {
   try {
-    const { error } = transactionJoiSchemas.addContact.validate(req.body);
+    const { error } = transactionJoiSchemas.addTransaction.validate(req.body);
     if (error) {
       throw createError(badValid.code, badValid.status);
     }

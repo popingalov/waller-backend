@@ -2,9 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
-const authRouter = require("./routes/api/auth");
 const transactionsRouter = require("./routes/api/transactions");
-const users = require("./routes/api/users");
 
 const app = express();
 
@@ -15,9 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 ///
-app.use("/api/auth", authRouter);
-app.use('/api/transactions', transactionsRouter);
-
+app.use("/api/transactions", transactionsRouter);
 
 const { notFound, serverError } = require("./libs/http-responses");
 
