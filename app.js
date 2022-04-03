@@ -3,6 +3,8 @@ const logger = require("morgan");
 const cors = require("cors");
 
 const transactionsRouter = require("./routes/api/transactions");
+// const authRouter = require("./routes/api/auth");
+// const users = require('./routes/api/users');
 
 const app = express();
 
