@@ -1,10 +1,9 @@
-const controllerSync = require('./controllerSync');
-const validation = require('./valid');
-
-const authenticate = require('./authenticate');
+const authenticate = require("./authenticate");
+const controllerSync = require("./controllerSync");
+const valid = require("./valid");
 
 module.exports = {
-  controllerSync,
-  validation,
   authenticate,
+  controllerSync,
+  valid,
 };

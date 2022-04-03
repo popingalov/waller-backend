@@ -1,6 +1,6 @@
-const CreateError = require('http-errors');
-const { badValid } = require('../libs/http-responses');
-const validation = schema => {
+const CreateError = require("http-errors");
+const { badValid } = require("../libs/http-responses");
+const validation = (schema) => {
   return async (req, res, next) => {
     try {
       const { error } = schema.validate(req.body);
