@@ -33,7 +33,8 @@ const authHandler = async (req, res, next) => {
         const hashPass = await bcrypt.hash(password, salt);
         const verificationToken = v4();
 
-        await User.create({email, name, password: hashPass, verificationToken});
+        const userqqq = await User.create({email, name, password: hashPass, verificationToken});
+        console.log('userqqq', userqqq)
 
          // const mail = getMail(email, verificationToken);
         // await setndMail(mail);
