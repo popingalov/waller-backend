@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(express.static("public"));
 ///
 app.use("/api/transactions", transactionsRouter);
+app.use('/api/auth', authRouter);
 
 const { notFound, serverError } = require("./libs/http-responses");
 
