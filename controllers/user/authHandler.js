@@ -3,6 +3,7 @@ const createError = require('http-errors');
 const {v4} = require('uuid');
 
 const { User } = require('../../models');
+
 // const {setndMail, getMail} = require('../../helpers')
 const { authValidator } = require('../../helpers');
 const {
@@ -21,10 +22,9 @@ const authHandler = async (req, res, next) => {
         if(error) {
             next(createError(badRequest.code, error.message));
         }
-
         const { email, password, name} = req.body;
         const user = await User.findOne({email});
-
+        
         if(user) {
             next(createError(inUse.code, inUse.status))
         }

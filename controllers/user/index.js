@@ -1,4 +1,4 @@
-const authHandler = require('./auth');
+const authHandler = require('./authHandler');
 
 module.exports = {
     authHandler
