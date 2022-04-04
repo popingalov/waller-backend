@@ -1,36 +1,17 @@
 const express = require('express');
-const router = express.Router();
-const ctrl = require('../../controllers/auth');
+
+const { authUrl } = require('../../libs');
+const { authHandler } = require('../../controllers');
 
 const {userJoiSchema} = require('../../models/users');
+const { authValidator } = require('../../helpers');
 
-const {controllerSync, valid } = require('../../middlewares');
-
-router.post('users/login', valid(userJoiSchema), controllerSync(ctrl.login))
-
-
-// router.post(
-//   '/users/register',
-//   validation(userJoiSchema),
-//   controllerSync(auth.register),
-// );
+const { controllerSync, valid } = require('../../middlewares');
+const ctrl = require('../../controllers/auth');
 
 
-// router.post(
-//   '/users/login',
-//   validation(userJoiSchema),
-//   controllerSync(auth.login),
-// );
-// router.get('/users/verify/:verifyToken', controllerSync(auth.verifyUser));
+const router = express.Router();
 
-// router.post(
-//   '/users/verify/',
-//   validation(userVarificationJoiSchema),
-//   controllerSync(auth.verifyUser),
-// );
-
-// router.get('/users/logout', authenticate, controllerSync(auth.logout));
-
-// router.get('/users/current', authenticate, controllerSync(auth.getCurrentUser));
-
+router.post(authUrl.auth, valid(authValidator), controllerSync(authHandler));
+router.post(authUrl.login, valid(userJoiSchema), controllerSync(ctrl.login));
 module.exports = router;

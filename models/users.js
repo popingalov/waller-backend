@@ -1,14 +1,13 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } =require('mongoose');
 const Joi = require('joi');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const userSchema = Schema(
-  {
+const userSchema = new Schema({
     password: {
-      type: String,
-      required: [true, 'Set password for user'],
-      minlength: 6,
+        type: String,
+        required: [true, 'Password is required'],
+        minlength: 6,
     },
     email: {
       type: String,
@@ -19,29 +18,22 @@ const userSchema = Schema(
       ],
       unique: true,
     },
-    subscription: {
-      type: String,
-      enum: ['starter', 'pro', 'business'],
-      default: 'starter',
+    balance: {
+      type: String
     },
     token: {
-      type: String,
-      default: null,
-    },
-    avatarURL: {
-      type: String,
+        type: String,
+        default: '',
     },
     verify: {
       type: Boolean,
       default: false,
     },
-    verifyToken: {
+    verificationToken: {
       type: String,
       required: [true, 'Verify token is required'],
     },
-  },
-  { versionKey: false, timestamps: true },
-);
+}, {versionKey: false, timestamps: true, collection: 'users'})
 
 userSchema.methods.setPassword = function (password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(5));
@@ -67,16 +59,7 @@ const userJoiSchema = Joi.object({
     .required(),
   password: Joi.string().min(6).required(),
 });
-// const joiSchema = Joi.object({
-//   name: Joi.string().min(3).max(30).required(),
-//   email: Joi.string()
-//     .pattern(
-//       /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-//     )
-//     .required(),
-//   phone: Joi.string().required(),
-//   favorite: Joi.boolean(),
-// });
+
 const User = model('user', userSchema);
 
 const userVarificationJoiSchema = Joi.object({
@@ -86,5 +69,5 @@ const userVarificationJoiSchema = Joi.object({
 module.exports = {
   User,
   userJoiSchema,
-  userVarificationJoiSchema,
+  userVarificationJoiSchema
 };

@@ -19,6 +19,10 @@ const HTTP_RESPONSES = {
     code: 400,
     status: error => `${error.details[0].message}`,
   },
+  badRequest: {
+    code: 400,
+    status: 'bad request',
+  },
   wrongData: {
     code: 401,
     status: "Email or password is wrong",
@@ -34,6 +38,10 @@ const HTTP_RESPONSES = {
   notFound: {
     code: 404,
     status: id => `Id ${id} not found`,
+  },
+  inUse: {
+    code: 409,
+    status: 'Email in use'
   },
   сonflict: {
     code: 409,
