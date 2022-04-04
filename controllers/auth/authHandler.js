@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const createError = require('http-errors');
+const CreateError = require('http-errors');
 const {v4} = require('uuid');
 
 const { User } = require('../../models');
@@ -17,9 +17,9 @@ const authHandler = async (req, res, next) => {
     const user = await User.findOne({email});
     
     if(user) {
-        next(createError(inUse.code, inUse.status))
+        throw new CreateError(inUse.code, inUse.status)
     }
-
+    console.log(123);
     const salt = await bcrypt.genSalt(saltDifficult);
     const hashPass = await bcrypt.hash(password, salt);
     const verificationToken = v4();
