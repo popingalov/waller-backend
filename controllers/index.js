@@ -1,9 +1,8 @@
-const { authHandler } = require('./user');
+const { authHandler, login } = require('./auth');
 const transactions = require("./transactions");
-const auth = require("./auth");
 
 module.exports = { 
     transactions,
-    auth, 
+    login,
     authHandler
 };

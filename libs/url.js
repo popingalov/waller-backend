@@ -4,7 +4,8 @@ const URL = {
 }
 
 const authUrl = {
-    auth: '/auth'
+    auth: '/auth',
+    login: 'users/login'
 }
 
 

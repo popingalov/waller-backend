@@ -116,8 +116,8 @@ const userSchema = new Schema({
       type: String,
       required: [true, 'Verify token is required'],
     },
-}, {versionKey: false, timestamps: true, collection: 'user'})
+}, {versionKey: false, timestamps: true, collection: 'users'})
 
-const User = model("user", userSchema);
+const User = model("users", userSchema);
 
 module.exports = User;
