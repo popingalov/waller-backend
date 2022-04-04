@@ -1,4 +1,4 @@
-const { created } = require("./libs/http-responses");
+const { created } = require("../../libs/http-responses");
 const { Transaction } = require("../../models");
 
 const createTransaction = async (req, res, next) => {
