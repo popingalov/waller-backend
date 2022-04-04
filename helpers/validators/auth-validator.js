@@ -1,9 +1,13 @@
 const joi = require('joi')
 
 const authValidator = joi.object({
-    email: joi.string().required().email(),
-    password: joi.string().required().min(5),
-    name: joi.string().required().min(2)
+    email: joi.string()
+    .pattern(
+      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+    )
+    .required(),
+    name: joi.string().min(2),
+    password: joi.string().min(6).required()
 })
 
 module.exports = authValidator;

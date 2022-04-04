@@ -4,6 +4,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const userSchema = new Schema({
+    name: {
+      type: String
+    },
     password: {
         type: String,
         required: [true, 'Password is required'],
@@ -19,7 +22,7 @@ const userSchema = new Schema({
       unique: true,
     },
     balance: {
-      type: String
+      type: Number
     },
     token: {
         type: String,
@@ -51,15 +54,6 @@ userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-const userJoiSchema = Joi.object({
-  email: Joi.string()
-    .pattern(
-      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-    )
-    .required(),
-  password: Joi.string().min(6).required(),
-});
-
 const User = model('user', userSchema);
 
 const userVarificationJoiSchema = Joi.object({
@@ -68,6 +62,5 @@ const userVarificationJoiSchema = Joi.object({
 
 module.exports = {
   User,
-  userJoiSchema,
   userVarificationJoiSchema
 };
