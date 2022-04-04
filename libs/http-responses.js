@@ -43,6 +43,10 @@ const HTTP_RESPONSES = {
     code: 409,
     status: 'Email in use'
   },
+  сonflict: {
+    code: 409,
+    status: mail => `Email ${mail} in use`,
+  },
   serverError: {
     code: 500,
     status: 'Sorry, we are being DDoSed. Please call later.',
