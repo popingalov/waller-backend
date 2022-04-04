@@ -19,9 +19,17 @@ const HTTP_RESPONSES = {
     code: 400,
     status: error => `${error.details[0].message}`,
   },
+  wrongData: {
+    code: 401,
+    status: "Email or password is wrong",
+  },
   badAuth: {
     code: 401,
     status: 'Not authorized',
+  },
+  notVerify: {
+    code: 401,
+    status: "Email not verify",
   },
   notFound: {
     code: 404,
