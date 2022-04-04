@@ -1,17 +1,12 @@
 const CreateError = require("http-errors");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken')
-const {badValid, wrongData, notVerify} = require('../../libs/http-responses')
+const {wrongData, notVerify} = require('../../libs/http-responses')
 
 const { SECRET_KEY } = process.env
-const { User, userJoiSchema } = require("../../models/users");
+const { User } = require("../../models/users");
 
 const login = async (req, res, next) => {
-  try {
-    const { error } = userJoiSchema.validate(req.body);
-    if (error) {
-      throw new CreateError(badValid.code, badValid.status());
-    }
     const { email, password} = req.body;
     const user = await User.findOne({ email });
     if (!user) {
@@ -36,9 +31,6 @@ const login = async (req, res, next) => {
         email,
       },
       })
-  } catch (error) {
-    next(error);
-  }
 }
 
 module.exports = login
