@@ -22,10 +22,18 @@ const HTTP_RESPONSES = {
   badRequest: {
     code: 400,
     status: 'bad request',
-},
+  },
+  wrongData: {
+    code: 401,
+    status: "Email or password is wrong",
+  },
   badAuth: {
     code: 401,
     status: 'Not authorized',
+  },
+  notVerify: {
+    code: 401,
+    status: "Email not verify",
   },
   notFound: {
     code: 404,
