@@ -3,8 +3,6 @@ const createError = require('http-errors');
 const {v4} = require('uuid');
 
 const { User } = require('../../models');
-
-// const {setndMail, getMail} = require('../../helpers')
 const { authValidator } = require('../../helpers');
 const {
     saltDifficult,
@@ -33,11 +31,7 @@ const authHandler = async (req, res, next) => {
         const hashPass = await bcrypt.hash(password, salt);
         const verificationToken = v4();
 
-        const userqqq = await User.create({email, name, password: hashPass, verificationToken});
-        console.log('userqqq', userqqq)
-
-         // const mail = getMail(email, verificationToken);
-        // await setndMail(mail);
+        await User.create({email, name, password: hashPass, verificationToken});
 
         res.status(created.code).json({
             user: {
