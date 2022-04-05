@@ -1,29 +1,32 @@
-const { Schema, model } =require('mongoose');
-const Joi = require('joi');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const { Schema, model } = require("mongoose");
+const Joi = require("joi");
+// const bcrypt = require("bcryptjs");
+// const jwt = require("jsonwebtoken");
 
-const userSchema = new Schema({
+const emailRegExp = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+const userSchema = new Schema(
+  {
     password: {
-        type: String,
-        required: [true, 'Password is required'],
-        minlength: 6,
+      type: String,
+      required: [true, "Password is required"],
+      minlength: 6,
     },
     email: {
       type: String,
-      required: [true, 'Email is required'],
-      match: [
-        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-        'Please fill a valid email address',
-      ],
+      required: [true, "Email is required"],
+      match: [emailRegExp, "Please fill a valid email address"],
       unique: true,
     },
+    name: {
+      type: String,
+    },
     balance: {
-      type: String
+      type: Number,
     },
     token: {
-        type: String,
-        default: '',
+      type: String,
+      default: "",
     },
     verify: {
       type: Boolean,
@@ -31,36 +34,35 @@ const userSchema = new Schema({
     },
     verificationToken: {
       type: String,
-      required: [true, 'Verify token is required'],
+      required: [true, "Verify token is required"],
     },
-}, {versionKey: false, timestamps: true, collection: 'users'})
+  },
+  { versionKey: false, timestamps: true, collection: "users" }
+);
 
-userSchema.methods.setPassword = function (password) {
-  this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(5));
-};
+// userSchema.methods.setPassword = function (password) {
+//   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(5));
+// };
 
-userSchema.methods.createToken = function () {
-  const { SECRET_KEY } = process.env;
-  const payload = {
-    _id: this._id,
-  };
-  return jwt.sign(payload, SECRET_KEY);
-};
+// userSchema.methods.createToken = function () {
+//   const { SECRET_KEY } = process.env;
+//   const payload = {
+//     _id: this._id,
+//   };
+//   return jwt.sign(payload, SECRET_KEY);
+// };
 
-userSchema.methods.comparePassword = function (password) {
-  return bcrypt.compareSync(password, this.password);
-};
+// userSchema.methods.comparePassword = function (password) {
+//   return bcrypt.compareSync(password, this.password);
+// };
 
 const userJoiSchema = Joi.object({
-  email: Joi.string()
-    .pattern(
-      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-    )
-    .required(),
+  email: Joi.string().pattern(emailRegExp).required(),
   password: Joi.string().min(6).required(),
+  name: Joi.string().required().min(2),
 });
 
-const User = model('user', userSchema);
+const User = model("user", userSchema);
 
 const userVarificationJoiSchema = Joi.object({
   email: Joi.string().required(),
@@ -69,5 +71,5 @@ const userVarificationJoiSchema = Joi.object({
 module.exports = {
   User,
   userJoiSchema,
-  userVarificationJoiSchema
+  userVarificationJoiSchema,
 };

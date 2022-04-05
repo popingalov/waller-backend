@@ -1,17 +1,14 @@
-const express = require('express');
+const express = require("express");
 
-const { authUrl } = require('../../libs');
-const { authHandler } = require('../../controllers');
+const { authUrl } = require("../../libs");
+const { authHandler, login } = require("../../controllers");
 
-const {userJoiSchema} = require('../../models/users');
-const { authValidator } = require('../../helpers');
+const { userJoiSchema } = require("../../models/users");
 
-const { controllerSync, valid } = require('../../middlewares');
-const ctrl = require('../../controllers/auth');
-
+const { controllerSync, valid } = require("../../middlewares");
 
 const router = express.Router();
-
-router.post(authUrl.auth, valid(authValidator), controllerSync(authHandler));
-router.post(authUrl.login, valid(userJoiSchema), controllerSync(ctrl.login));
+// api/
+router.post(authUrl.auth, valid(userJoiSchema), controllerSync(authHandler));
+router.post(authUrl.login, valid(userJoiSchema), controllerSync(login));
 module.exports = router;
