@@ -14,7 +14,9 @@ const {
 const authHandler = async (req, res, next) => {
 
     const { email, password, name} = req.body;
-    const user = await User.findOne({email});
+    const tremedEmail = email.trim();
+    
+    const user = await User.findOne({email: tremedEmail});
     
     if(user) {
         throw new CreateError(inUse.code, inUse.status)
@@ -23,7 +25,7 @@ const authHandler = async (req, res, next) => {
     const salt = await bcrypt.genSalt(saltDifficult);
     const hashPass = await bcrypt.hash(password, salt);
     const verificationToken = v4();
-    await User.create({email, name, password: hashPass, verificationToken});
+    await User.create({email: tremedEmail, name, password: hashPass, verificationToken});
 
     res.status(created.code).json({
         user: {
