@@ -1,10 +1,13 @@
-const jwt = require('jsonwebtoken');
-const CreateError = require('http-errors');
+
+const jwt = require("jsonwebtoken");
+const CreateError = require("http-errors");
+
+
 ///
 
-const { User } = require('../models');
-const { badAuth } = require('../libs/http-responses');
-
+const { User } = require("../models");
+const { badAuth } = require("../libs/http-responses");
+const { SECRET_KEY } = process.env;
 ///
 
 const authenticate = async (req, res, next) => {
@@ -17,11 +20,13 @@ const authenticate = async (req, res, next) => {
     // wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
     const [bearer, token] = authorization.split(" ");
-    if (bearer !== 'Bearer') {
+    if (bearer !== "Bearer") {
+
       throw new CreateError(badAuth.code, badAuth.status);
     }
 
     // wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+
 
     const { SECRET_KEY } = process.env;
     const { id } = jwt.verify(token, SECRET_KEY);
@@ -29,7 +34,7 @@ const authenticate = async (req, res, next) => {
     if (!user.token) {
       throw new CreateError(
         badAuth.code,
-        `${badAuth.status} ,or you lost login or password mb invalid token`,
+        `${badAuth.status} ,or you lost login or password mb invalid token`
       );
     }
 

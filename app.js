@@ -3,9 +3,9 @@ const logger = require("morgan");
 const cors = require("cors");
 require('dotenv').config();
 
-const { authRouter } = require('./routes');
-const { URL } = require('./libs');
-const transactionsRouter = require("./routes/api/transactions");
+
+const { authRouter, transactionsRouter } = require("./routes");
+const { URL } = require("./libs");
 const { notFound, serverError } = require("./libs/http-responses");
 const {userRouter} = require('./routes')
 
@@ -22,8 +22,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter)
 
 
-
-
+app.use(URL.transactions, transactionsRouter);
 app.use(URL.users, authRouter);
 
 app.use((req, res) => {
