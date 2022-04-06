@@ -16,13 +16,13 @@ const login = async (req, res, next) => {
   //   throw new CreateError(notVerify.code, notVerify.status);
   // }
   const comparePassword = await bcrypt.compare(password, user.password);
-  console.log(comparePassword);
   if (!comparePassword) {
     throw new CreateError(wrongData.code, wrongData.status);
   }
   const payload = {
     id: user._id,
   };
+  
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
   await User.findByIdAndUpdate(user._id, { token });
   res.json({
