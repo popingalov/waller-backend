@@ -1,9 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const { authenticate } = require('../../middlewares')
-const ctrl = require('../../controllers/users')
+const { authenticate } = require('../../middlewares');
+const { current, logout } = require('../../controllers/users');
 
-router.get("/current", authenticate, ctrl.current)
+router.get('/current', authenticate, current);
+router.get('/logout', authenticate, logout);
 
-module.exports = router
+module.exports = router;

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { wrongData } = require('../../libs/http-responses');
 
 const { SECRET_KEY } = process.env;
-const { User } = require('../../models/users');
+const { User } = require('../../models');
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
