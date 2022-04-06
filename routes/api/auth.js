@@ -4,7 +4,7 @@ const express = require("express");
 const { authUrl } = require("../../libs");
 const { authHandler, login } = require("../../controllers");
 
-const { userJoiSchema } = require("../../models/users");
+const { userJoiSchema } = require("../../models");
 
 const { controllerSync, valid } = require("../../middlewares");
 

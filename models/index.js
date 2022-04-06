@@ -1,8 +1,10 @@
-const User = require('./users');
+const { User, userJoiSchema, userVerificationJoiSchema } = require('./users');
 const { Transaction, transactionJoiSchemas } = require("./transaction");
 
 module.exports = {
   User,
   Transaction,
-  transactionJoiSchemas
+  transactionJoiSchemas,
+  userVerificationJoiSchema,
+  userJoiSchema
 };
