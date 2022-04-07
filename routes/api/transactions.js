@@ -9,7 +9,7 @@ const {
 
 // api/transactions
 router.get("/", authenticate, controllerSync(getAllTransactions));
-// router.get("/", authenticate, controllerSync(getAllTransactions));
+router.get("/statistics", authenticate, controllerSync(getAllTransactions));
 router.post(
   "/",
   authenticate,
