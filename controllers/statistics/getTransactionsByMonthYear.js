@@ -1,6 +1,6 @@
 const { Transaction } = require("../../models");
 
-const getAllTransactions = async (req, res, next) => {
+const getTransactionsByMonthYear = async (req, res, next) => {
   const { month, year } = req.query;
   const { _id } = req.user;
 
@@ -12,4 +12,4 @@ const getAllTransactions = async (req, res, next) => {
   !transactions ? res.json([]) : res.json(transactions);
 };
 
-module.exports = getAllTransactions;
+module.exports = getTransactionsByMonthYear;
