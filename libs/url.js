@@ -1,14 +1,12 @@
 const URL = {
-
-  base: "http//localhost:4000",
-  users: "/api/users",
-  transactions: "/api/transactions",
+  base: 'http//localhost:4000',
 };
 
 const authUrl = {
-  auth: "/auth",
-  login: "/login",
-
+  auth: '/auth',
+  login: '/login',
+  current: '/current',
+  logout: '/logout',
 };
 
 module.exports = {

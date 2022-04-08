@@ -7,7 +7,6 @@ const CreateError = require("http-errors");
 
 const { User } = require("../models");
 const { badAuth } = require("../libs/http-responses");
-const { SECRET_KEY } = process.env;
 ///
 
 const authenticate = async (req, res, next) => {
@@ -31,6 +30,7 @@ const authenticate = async (req, res, next) => {
     const { SECRET_KEY } = process.env;
     const { id } = jwt.verify(token, SECRET_KEY);
     const user = await User.findById(id);
+    
     if (!user.token) {
       throw new CreateError(
         badAuth.code,
