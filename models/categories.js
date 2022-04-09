@@ -1,15 +1,9 @@
 const Joi = require("joi");
 const { Schema, model } = require("mongoose");
-const { v4 } = require("uuid");
 
 const { pigLangDefaultCategories, enLangDefaultCategories } = require('../libs');
 
 const categorySchema = new Schema({
-    id: {
-        type: String,
-        required: true,
-        default: v4()
-    },
     value: {
         type: String,
         required: true,

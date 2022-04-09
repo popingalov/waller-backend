@@ -1,3 +1,3 @@
-const getTransactionsByMonthYear = require("./getTransactionsByMonthYear");
+const getTransactionsStatsByMonthYear = require("./getTransactionsStatsByMonthYear");
 
-module.exports = { getTransactionsByMonthYear };
+module.exports = { getTransactionsStatsByMonthYear };

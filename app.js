@@ -5,8 +5,9 @@ require("dotenv").config();
 
 const {
   authRouter,
-  statisticsRouter,
   transactionsRouter,
+  statisticsRouter,
+  categoriesRouter,
 } = require("./routes");
 const { notFound, serverError } = require("./libs/http-responses");
 
@@ -22,6 +23,7 @@ app.use(express.static("public"));
 app.use("/api/users", authRouter);
 app.use("/api/transactions", transactionsRouter);
 app.use("/api/statistics", statisticsRouter);
+app.use("/api/categories", categoriesRouter);
 
 app.use((req, res) => {
   res.status(notFound.code).json({ message: notFound.status });
