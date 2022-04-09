@@ -1,5 +1,9 @@
-const add = require('./add');
+const addCategory = require('./add');
+const getCategory = require('./get');
+const removeCategory = require('./remove');
 
 module.exports = {
-    add
+    addCategory,
+    getCategory,
+    removeCategory
 }

@@ -3,9 +3,7 @@ const CreateError = require("http-errors");
 
 const { created, notFound } = require("../../libs").HTTP_RESPONSES;
 
-console.log(created);
-
-const add = async (req, res, next) => {
+const addCategory = async (req, res, next) => {
   const { _id } = req.user;
   const { value, isEnglishVersion } = req.body;
 
@@ -23,10 +21,13 @@ const add = async (req, res, next) => {
     ? categoryList.en.push(newCategory)
     : categoryList.ru.push(newCategory);
 
-  const newCategoryList = await Category.findByIdAndUpdate(
-    categoryList._id,
-    categoryList,
-    { new: true }
+  await Category.findByIdAndUpdate(categoryList._id, categoryList, {
+    new: true,
+  });
+
+  const [newCategoryList] = await Category.find(
+    { owner: _id },
+    "-owner -createdAt -updatedAt"
   );
 
   res.status(created.code).json({
@@ -35,4 +36,4 @@ const add = async (req, res, next) => {
   });
 };
 
-module.exports = add;
+module.exports = addCategory;
