@@ -18,7 +18,7 @@ const transactionSchema = Schema(
     balance: { type: Number, required: true, min: 0.01 },
     owner: { type: Schema.Types.ObjectId, ref: "user", required: true },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false, timestamps: true, collection: "transactions" }
 );
 
 const addTransaction = Joi.object({

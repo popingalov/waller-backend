@@ -1,3 +1,4 @@
-const current = require('./current.js')
+const current = require('./current.js');
+const logout = require('./logout');
 
-module.exports = {current}
+module.exports = { current, logout };
