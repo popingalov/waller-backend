@@ -4,7 +4,7 @@ const cors = require("cors");
 require('dotenv').config();
 
 
-const { authRouter, transactionsRouter } = require("./routes");
+const { authRouter, transactionsRouter, categoriesRouter } = require("./routes");
 const { notFound, serverError } = require("./libs/http-responses");
 
 const app = express();
@@ -18,6 +18,7 @@ app.use(express.static("public"));
 
 app.use("/api/transactions", transactionsRouter);
 app.use('/api/users', authRouter);
+app.use('/api/categories', categoriesRouter);
 
 app.use((req, res) => {
   res.status(notFound.code).json({ message: notFound.status });
