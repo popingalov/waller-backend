@@ -1,5 +1,7 @@
-const add = require('./add');
+const addCategory = require('./add');
+const getCategory = require('./get');
 
 module.exports = {
-    add
+    addCategory,
+    getCategory
 }
