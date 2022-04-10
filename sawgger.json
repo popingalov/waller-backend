@@ -38,15 +38,39 @@
                             }
                         },
                         "responses": {
-                            "200": {
+                            "201": {
                                 "description": "Successful operation",
                                 "content": {
-                                    
+                                    "application/json": {
+                                        "shema": {
+                                            "$ref": "#/components/shemas/RegistrationResponse"
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
+    },
+    "components": {
+        "shemas": {
+            "RegistrationRequest": {
+                "type": "object",
+                "required": [ "email", "password"],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User`s email",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description":"User`s password",
+                        "example": "qwe123"
+                    }
+                }
+            }
+        }   
+    }
 }
