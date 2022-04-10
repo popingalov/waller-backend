@@ -7,7 +7,7 @@ const { addCategory, getCategory, removeCategory } = require('../../controllers'
 
 const router = express.Router()
 
-router.post('/add', authenticate, valid(categoryJoiSchema), controllerSync(addCategory));
+router.post('/', authenticate, valid(categoryJoiSchema), controllerSync(addCategory));
 router.get('/', authenticate, controllerSync(getCategory));
 router.patch('/:categoryId', authenticate, controllerSync(removeCategory))
 
