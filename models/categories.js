@@ -35,7 +35,8 @@ const categoriesSchema = new Schema({
 const Category = model("category", categoriesSchema); 
 
 const categoryJoiSchema = Joi.object({
-    value: Joi.string().required().max(70)
+    value: Joi.string().required().max(70),
+    isEnglishVersion: Joi.boolean().default(false)
   });
 
 module.exports = {

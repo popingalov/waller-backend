@@ -5,10 +5,11 @@ const { created, notFound } = require("../../libs").HTTP_RESPONSES;
 
 const addCategory = async (req, res, next) => {
   const { _id } = req.user;
-  const { value, isEnglishVersion } = req.body;
+  const { aaa, value, isEnglishVersion } = req.body;
+  console.log('req.body', req.body, aaa)
 
   const newCategory = {
-    value: value,
+    value
   };
 
   const [categoryList] = await Category.find({ owner: _id });
@@ -25,13 +26,8 @@ const addCategory = async (req, res, next) => {
     new: true,
   });
 
-  const [newCategoryList] = await Category.find(
-    { owner: _id },
-    "-owner -createdAt -updatedAt"
-  );
-
   res.status(created.code).json({
-    categoryList: newCategoryList,
+    newCategory,
     status: created.status,
   });
 };
