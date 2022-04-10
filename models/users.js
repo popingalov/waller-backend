@@ -21,6 +21,7 @@ const userSchema = new Schema(
     },
     name: {
       type: String,
+      minlength: 2
     },
     balance: {
       type: Number,
@@ -40,22 +41,6 @@ const userSchema = new Schema(
   },
   { versionKey: false, timestamps: true, collection: "users" }
 );
-
-// userSchema.methods.setPassword = function (password) {
-//   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(5));
-// };
-
-// userSchema.methods.createToken = function () {
-//   const { SECRET_KEY } = process.env;
-//   const payload = {
-//     _id: this._id,
-//   };
-//   return jwt.sign(payload, SECRET_KEY);
-// };
-
-// userSchema.methods.comparePassword = function (password) {
-//   return bcrypt.compareSync(password, this.password);
-// };
 
 const userJoiSchema = Joi.object({
   email: Joi.string().pattern(emailRegExp).required(),
