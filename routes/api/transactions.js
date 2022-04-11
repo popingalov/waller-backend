@@ -13,7 +13,7 @@ router.post(
   '/',
   authenticate,
   valid(transactionJoiSchemas.addTransaction),
-  controllerSync(createTransaction),
+  controllerSync(createTransaction)
 );
 
 module.exports = router;
