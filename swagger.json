@@ -53,7 +53,7 @@
         },
         "responses": {
           "201": {
-            "description": "Createdd",
+            "description": "Created",
             "content": {
               "application/json": {
                 "sсhema": {
@@ -179,7 +179,7 @@
         },
         "responses": {
           "201": {
-            "description": "Createdd",
+            "description": "Created",
             "content": {
               "application/json": {
                 "sсhema": {
