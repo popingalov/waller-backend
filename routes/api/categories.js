@@ -15,7 +15,7 @@ router.post(
   '/',
   authenticate,
   valid(categoryJoiSchema),
-  controllerSync(addCategory),
+  controllerSync(addCategory)
 );
 router.get('/', authenticate, controllerSync(getCategory));
 router.patch('/:categoryId', authenticate, controllerSync(removeCategory));
