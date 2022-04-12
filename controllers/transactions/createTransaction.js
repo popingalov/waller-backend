@@ -23,8 +23,14 @@ const createTransaction = async (req, res, next) => {
     owner: req.user._id,
   };
 
-  const result = await Transaction.create(newTransaction);
-  res.status(created.code).json(result);
+  await Transaction.create(newTransaction);
+
+  const updatedTransactions = await Transaction.find(
+    { owner: _id },
+    "-createdAt -updatedAt"
+  );
+
+  res.status(created.code).json(updatedTransactions);
 };
 
 module.exports = createTransaction;
