@@ -24,7 +24,6 @@ const categorySchema = new Schema({
   },
   color: {
     type: String,
-    required: true,
     maxlength: 7,
   },
 });
