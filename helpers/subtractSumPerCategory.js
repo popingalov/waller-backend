@@ -8,7 +8,7 @@ function subtractSumPerCategory(transactions) {
         return stats;
       }
     }
-
+    console.log(stats);
     const { category, amount } = transaction;
 
     const newTransactionStatsObj = {
