@@ -53,7 +53,7 @@ const Category = model('category', categoriesSchema);
 
 const categoryJoiSchema = Joi.object({
   value: Joi.string().required().max(70),
-  color: Joi.string().required().max(70),
+  color: Joi.string().max(70),
   isEnglishVersion: Joi.boolean().default(false),
 });
 
