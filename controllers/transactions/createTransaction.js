@@ -1,6 +1,6 @@
-const { created } = require("../../libs/http-responses");
-const { Transaction } = require("../../models");
-const { calculateCurrentBalance } = require("../../helpers");
+const { created } = require('../../libs/http-responses');
+const { Transaction } = require('../../models');
+const { calculateCurrentBalance } = require('../../helpers');
 
 const createTransaction = async (req, res, next) => {
   const { _id } = req.user;
@@ -8,9 +8,8 @@ const createTransaction = async (req, res, next) => {
 
   const transactions = await Transaction.find(
     { owner: _id },
-    "-createdAt -updatedAt"
+    '-createdAt -updatedAt',
   );
-
   const currentBalance = calculateCurrentBalance({
     transactions,
     type,

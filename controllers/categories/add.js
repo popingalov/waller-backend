@@ -1,15 +1,16 @@
-const { Category } = require("../../models");
-const CreateError = require("http-errors");
-
-const { created, notFound } = require("../../libs").HTTP_RESPONSES;
+const { Category } = require('../../models');
+const CreateError = require('http-errors');
+const randomColor = require('randomcolor');
+const { created, notFound } = require('../../libs').HTTP_RESPONSES;
 
 const addCategory = async (req, res, next) => {
   const { _id } = req.user;
   const { aaa, value, isEnglishVersion } = req.body;
-  console.log('req.body', req.body, aaa)
+  console.log('req.body', req.body, aaa);
 
   const newCategory = {
-    value
+    value,
+    color: randomColor,
   };
 
   const [categoryList] = await Category.find({ owner: _id });
