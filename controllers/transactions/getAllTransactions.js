@@ -5,14 +5,22 @@ const getAllTransactions = async (req, res, next) => {
   const skip = (page - 1) * limit;
   const { _id } = req.user;
 
+  //   const transactions = await Transaction.find(
+  //     { owner: _id },
+  //     '-createdAt -updatedAt',
+  //     {
+  //       skip,
+  //       limit: Number(limit),
+  //     },
+  //   ).populate('owner', 'email');
   const transactions = await Transaction.find(
     { owner: _id },
     '-createdAt -updatedAt',
-    {
-      skip,
-      limit: Number(limit),
-    },
-  ).populate('owner', 'email');
+  )
+    .sort({ date: -1 })
+    .skip(skip)
+    .limit(limit)
+    .populate('owner', 'email');
   !transactions ? res.json([]) : res.json(transactions);
 };
 
