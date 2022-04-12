@@ -7,12 +7,12 @@ const addCategory = async (req, res, next) => {
   const { _id } = req.user;
   const { aaa, value, isEnglishVersion } = req.body;
   console.log('req.body', req.body, aaa);
-
+  const color = randomColor();
   const newCategory = {
     value,
-    color: randomColor,
+    color,
   };
-
+  
   const [categoryList] = await Category.find({ owner: _id });
 
   if (!categoryList) {

@@ -1,8 +1,8 @@
-const { Transaction } = require("../../models");
+const { Transaction } = require('../../models');
 const {
   getCurrentMonthYear,
   subtractSumPerCategory,
-} = require("../../helpers");
+} = require('../../helpers');
 
 const getTransactionsStatsByMonthYear = async (req, res, next) => {
   const { correctedCurrentMonth, currentYear } = getCurrentMonthYear();
@@ -15,8 +15,8 @@ const getTransactionsStatsByMonthYear = async (req, res, next) => {
 
   const transactions = await Transaction.find(
     { owner: _id, date: regExpMonthYear },
-    "-createdAt -updatedAt"
-  ).populate("owner", "email");
+    '-createdAt -updatedAt',
+  ).populate('owner', 'email');
 
   const transactionsStatsObj = subtractSumPerCategory(transactions);
 
