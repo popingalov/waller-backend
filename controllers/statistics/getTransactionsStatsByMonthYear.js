@@ -17,8 +17,12 @@ const getTransactionsStatsByMonthYear = async (req, res, next) => {
 
   const regExpMonthYear = new RegExp(`^\\d{2}\\.${month}\\.${year}$`);
 
-  const transactions = await Transaction.find(
-    { owner: _id, date: regExpMonthYear },
+  const transactionsPlus = await Transaction.find(
+    { owner: _id, date: regExpMonthYear, type: "+" },
+    '-createdAt -updatedAt',
+  ).populate('owner', 'email');
+  const transactionsMinus = await Transaction.find(
+    { owner: _id, date: regExpMonthYear, type: "-" },
     '-createdAt -updatedAt',
   ).populate('owner', 'email');
   const [categoryList] = await Category.find(
@@ -32,12 +36,17 @@ const getTransactionsStatsByMonthYear = async (req, res, next) => {
     return acc;
   }, {});
 
-  const transactionsStatsObj = subtractSumPerCategory(
-    transactions,
+  const {sumPerCategoryArr: incomes, totalAmount:  incomesTotal } = subtractSumPerCategory(
+    transactionsPlus,
     normalizedCategoryList,
   );
 
-  !transactions ? res.json([]) : res.json(transactionsStatsObj);
+  const {sumPerCategoryArr: costs, totalAmount: costsTotal } = subtractSumPerCategory(
+    transactionsMinus,
+    normalizedCategoryList,
+  );
+
+  !transactionsPlus || !transactionsMinus ? res.json([]) : res.json({incomes, incomesTotal, costs, costsTotal});
 };
 
 module.exports = getTransactionsStatsByMonthYear;

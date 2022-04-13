@@ -1,12 +1,9 @@
 function subtractSumPerCategory(transactions, color) {
-  return transactions.reduce((stats, transaction) => {
-    console.log(transaction, 'transaction');
+  const sumPerCategoryArr = transactions.reduce((stats, transaction) => {
 
     for (const stat of stats) {
       if (stat.category === transaction.category) {
-        stat.type === '-'
-          ? (stat.sum += transaction.amount)
-          : (stat.sum -= transaction.amount);
+        stat.sum += transaction.amount;
         return stats;
       }
     }
@@ -21,6 +18,10 @@ function subtractSumPerCategory(transactions, color) {
     stats.push(newTransactionStatsObj);
     return stats;
   }, []);
+
+  const totalAmount = sumPerCategoryArr.reduce((acc, item) => acc + item.sum, 0) 
+
+  return { sumPerCategoryArr, totalAmount}
 }
 
 module.exports = subtractSumPerCategory;
