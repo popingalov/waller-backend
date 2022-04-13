@@ -1,13 +1,17 @@
-const { Transaction } = require("../../models");
+const { Transaction, Category } = require('../../models');
 const {
   getCurrentMonthYear,
   subtractSumPerCategory,
-} = require("../../helpers");
+} = require('../../helpers');
 
 const getTransactionsStatsByMonthYear = async (req, res, next) => {
   const { correctedCurrentMonth, currentYear } = getCurrentMonthYear();
 
-  const { month = correctedCurrentMonth, year = currentYear } = req.query;
+  const {
+    month = correctedCurrentMonth,
+    year = currentYear,
+    leng = null,
+  } = req.query;
 
   const { _id } = req.user;
 
@@ -15,10 +19,23 @@ const getTransactionsStatsByMonthYear = async (req, res, next) => {
 
   const transactions = await Transaction.find(
     { owner: _id, date: regExpMonthYear },
-    "-createdAt -updatedAt"
-  ).populate("owner", "email");
+    '-createdAt -updatedAt',
+  ).populate('owner', 'email');
+  const [categoryList] = await Category.find(
+    { owner: _id },
+    '-owner -createdAt -updatedAt',
+  );
 
-  const transactionsStatsObj = subtractSumPerCategory(transactions);
+  const categoryLang = leng ? categoryList.en : categoryList.ru;
+  const normalizedCategoryList = categoryLang.reduce((acc, category) => {
+    acc[category.value] = category.color;
+    return acc;
+  }, {});
+
+  const transactionsStatsObj = subtractSumPerCategory(
+    transactions,
+    normalizedCategoryList,
+  );
 
   !transactions ? res.json([]) : res.json(transactionsStatsObj);
 };
