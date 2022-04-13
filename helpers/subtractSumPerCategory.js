@@ -1,5 +1,7 @@
-function subtractSumPerCategory(transactions) {
+function subtractSumPerCategory(transactions, color) {
   return transactions.reduce((stats, transaction) => {
+    console.log(transaction, 'transaction');
+
     for (const stat of stats) {
       if (stat.category === transaction.category) {
         stat.type === '+'
@@ -8,15 +10,16 @@ function subtractSumPerCategory(transactions) {
         return stats;
       }
     }
-    console.log(stats);
+
     const { category, amount } = transaction;
 
     const newTransactionStatsObj = {
+      color: color[category],
       category,
       sum: amount,
     };
-
-    return [...stats, newTransactionStatsObj];
+    stats.push(newTransactionStatsObj);
+    return stats;
   }, []);
 }
 

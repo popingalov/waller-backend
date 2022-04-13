@@ -17,7 +17,7 @@ const getAllTransactions = async (req, res, next) => {
     { owner: _id },
     '-createdAt -updatedAt',
   )
-    .sort({ date: -1 })
+    .sort({ dataFiltr: -1 })
     .skip(skip)
     .limit(limit)
     .populate('owner', 'email');
