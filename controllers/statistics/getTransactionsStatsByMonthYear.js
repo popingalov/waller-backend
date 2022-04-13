@@ -21,6 +21,7 @@ const getTransactionsStatsByMonthYear = async (req, res, next) => {
     { owner: _id, date: regExpMonthYear },
     '-createdAt -updatedAt',
   ).populate('owner', 'email');
+
   const [categoryList] = await Category.find(
     { owner: _id },
     '-owner -createdAt -updatedAt',
@@ -31,7 +32,7 @@ const getTransactionsStatsByMonthYear = async (req, res, next) => {
     acc[category.value] = category.color;
     return acc;
   }, {});
-
+  console.log(transactions);
   const transactionsStatsObj = subtractSumPerCategory(
     transactions,
     normalizedCategoryList,
