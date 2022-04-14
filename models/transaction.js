@@ -21,7 +21,7 @@ const transactionSchema = Schema(
 
 const addTransaction = Joi.object({
   date: Joi.string().required(),
-  dataFiltr: Joi.number().required(),
+  dataFiltr: Joi.number(),
   type: Joi.string().valid('-', '+'),
   category: Joi.string().required(),
   comment: Joi.string(),
