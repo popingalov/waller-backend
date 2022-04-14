@@ -10,12 +10,15 @@ const createTransaction = async (req, res, next) => {
   const { _id } = req.user;
   const { date, amount, type } = req.body;
 
+  const msPerDay = 86399999;
+
   const normalizedDate = date.split('.').reverse().join('.');
-  const transactionTimeStamp = new Date(normalizedDate).getTime();
+  const filter = new Date(normalizedDate).getTime();
+  const comparedTimeStamp  = filter + msPerDay;
 
   const dateNow = new Date().getTime();
 
-  if (transactionTimeStamp > dateNow) {
+  if (comparedTimeStamp > dateNow) {
     throw new CreateError(dataError.code, dataError.status);
   }
 
@@ -23,16 +26,14 @@ const createTransaction = async (req, res, next) => {
     { owner: _id },
     '-createdAt -updatedAt',
   ).sort({ dataFiltr: -1 });
-
-  //   const dateTime = new Date().getTime();
-  //   const dateNow = new Date(dateTime).toLocaleDateString();
+  
   let currentBalance = 0;
-  if (transactionTimeStamp < dateNow) {
+  if (comparedTimeStamp < dateNow) {
     currentBalance = await longOperation({
       transactions,
       type,
       amount,
-      date,
+      filter,
       _id,
     });
   } else {
@@ -45,6 +46,7 @@ const createTransaction = async (req, res, next) => {
 
   const newTransaction = {
     ...req.body,
+    newFiltr: dateNow,
     balance: currentBalance || amount,
     owner: req.user._id,
   };
