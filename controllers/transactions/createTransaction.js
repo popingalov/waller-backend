@@ -1,10 +1,11 @@
 const { created } = require('../../libs/http-responses');
 const { Transaction } = require('../../models');
 const { calculateCurrentBalance, longOperation } = require('../../helpers');
+const { getTransactions } = require('../../helpers');
 
 const createTransaction = async (req, res, next) => {
   const { _id } = req.user;
-  const { date, amount, type, dataFiltr: filter, triger = null } = req.body;
+  const { amount, type, dataFiltr: filter, triger = null } = req.body;
 
   const transactions = await Transaction.find(
     { owner: _id },
@@ -38,8 +39,9 @@ const createTransaction = async (req, res, next) => {
     owner: req.user._id,
   };
 
-  const result = await Transaction.create(newTransaction);
-  res.status(created.code).json(result);
+  await Transaction.create(newTransaction);
+  const transactionsList = await getTransactions(_id);
+  res.status(created.code).json(transactionsList);
 };
 
 module.exports = createTransaction;
