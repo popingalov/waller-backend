@@ -17,12 +17,13 @@ const calculateCurrentBalance = ({ transactions, type, amount }) => {
     }
   }
 
-  const lastTransaction = transactionsLength - 1;
-  const previousBalance = transactions[lastTransaction].balance;
+  //   const lastTransaction = transactionsLength - 1;
+  const previousBalance = transactions[0].balance;
 
   if (type === '-' && previousBalance < amount) {
     throw noPositiveBalanceError;
   }
+
   return type === '-'
     ? Number(previousBalance) - Number(amount)
     : Number(previousBalance) + Number(amount);

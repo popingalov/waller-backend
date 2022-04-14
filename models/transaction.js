@@ -25,6 +25,7 @@ const addTransaction = Joi.object({
   type: Joi.string().valid('-', '+'),
   category: Joi.string().required(),
   comment: Joi.string(),
+  triger: Joi.boolean(),
   amount: Joi.number().min(0.01).precision(2).required(),
 });
 

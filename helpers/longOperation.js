@@ -19,26 +19,31 @@ const longOperation = async ({ transactions, type, amount, filter }) => {
 
   //   console.log(transactions);
   let nawBalance = 0;
+  let testTime = 1;
   for (let i = 0; i <= transactionsLength; i++) {
-    console.log('error');
     if (transactions[transactionsLength - i].dataFiltr > filter) {
-      nawBalance = Number(transactions[transactionsLength - i].balance);
-      console.log(nawBalance);
-      let testTime = 1;
       if (testTime === 1) {
+        nawBalance =
+          Number(transactions[transactionsLength + 1 - i]?.balance) || 0;
+        // console.log('error', transactions[transactionsLength + 1 - i]);
         if (type === '-') {
           if (nawBalance < amount) {
             throw noPositiveBalanceError;
           }
+          console.log('зачем?');
           nawBalance = Number(Number(nawBalance) - Number(amount));
           lastBalance = nawBalance;
           transactions[transactionsLength - i].balance = nawBalance;
-          testTime = 0;
+          testTime = amount;
         }
         if (type === '+') {
-          nawBalance = Number(Number(nawBalance) + Number(amount));
-          lastBalance = nawBalance;
-          transactions[transactionsLength - i].balance = nawBalance;
+          //   nawBalance = Number(Number(nawBalance) + Number(amount));
+
+          lastBalance = nawBalance + Number(amount);
+          console.log('lastBalance', lastBalance);
+          console.log('nawBalance', nawBalance);
+          transactions[transactionsLength - i].balance =
+            lastBalance + transactions[transactionsLength - i].balance.amount;
           testTime = 0;
         }
       }
@@ -59,18 +64,18 @@ const longOperation = async ({ transactions, type, amount, filter }) => {
           transactions[transactionsLength - i].balance = nawBalance;
         }
       }
-
+      // transactions.balance = lastBalance;
       const nyy = await Transaction.findByIdAndUpdate(
         transactions[transactionsLength - i]._id,
-        transactions,
+        transactions[transactionsLength - i],
         {
           new: true,
         },
       );
-      console.log(nyy);
+      //   console.log(nyy);
     }
   }
-  console.log(lastBalance, 'lastBalance');
+  //   console.log(lastBalance, 'lastBalance');
   return lastBalance;
 };
 
