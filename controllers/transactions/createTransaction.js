@@ -1,20 +1,36 @@
 const { created } = require('../../libs/http-responses');
 const { Transaction } = require('../../models');
-const { calculateCurrentBalance } = require('../../helpers');
+const { calculateCurrentBalance, longOperation } = require('../../helpers');
 
 const createTransaction = async (req, res, next) => {
   const { _id } = req.user;
-  const { amount, type } = req.body;
+  const { date, amount, type, dataFiltr: filter } = req.body;
 
   const transactions = await Transaction.find(
     { owner: _id },
     '-createdAt -updatedAt',
-  );
-  const currentBalance = calculateCurrentBalance({
-    transactions,
-    type,
-    amount,
-  });
+  ).sort({ dataFiltr: -1 });
+
+  const dateTime = new Date().getTime();
+  const dateNow = new Date(dateTime).toLocaleDateString();
+  let currentBalance = 0;
+  if (date < dateNow) {
+    currentBalance = await longOperation({
+      transactions,
+      type,
+      amount,
+      filter,
+      _id,
+    });
+  }
+
+  if (date >= dateNow) {
+    currentBalance = await calculateCurrentBalance({
+      transactions,
+      type,
+      amount,
+    });
+  }
 
   const newTransaction = {
     ...req.body,
