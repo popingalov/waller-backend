@@ -46,7 +46,7 @@ const createTransaction = async (req, res, next) => {
 
   const newTransaction = {
     ...req.body,
-    newFiltr: dateNow,
+    dataFiltr: dateNow,
     balance: currentBalance || amount,
     owner: req.user._id,
   };
