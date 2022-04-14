@@ -13,6 +13,7 @@ const getAllTransactions = async (req, res, next) => {
   //       limit: Number(limit),
   //     },
   //   ).populate('owner', 'email');
+
   const transactions = await Transaction.find(
     { owner: _id },
     '-createdAt -updatedAt',
