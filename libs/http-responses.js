@@ -39,6 +39,10 @@ const HTTP_RESPONSES = {
     code: 404,
     status: id => `Id ${id} not found`,
   },
+  dataError: {
+    code: 407,
+    status: 'Wrong date'
+  },
   inUse: {
     code: 409,
     status: 'Email in use'
