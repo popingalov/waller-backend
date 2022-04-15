@@ -23,12 +23,21 @@ const createTransaction = async (req, res, next) => {
   const mm = String(today.getMonth() + 1).padStart(2, '0');
   const yyyy = today.getFullYear();
   const currentDate = dd + '.' + mm + '.' + yyyy;
+  //
   const normilizedCurrentDate = currentDate.split('.').reverse().join('.');
   //
-  const timForLongOperation = new Date(normalizedDate).getTime();
+  let helper = today.getTime();
   //
-  console.log(new Date(normalizedDate).getTime() < today.getTime());
+  //   console.log(timForLongOperation < today.getTime());
+  const calc = function () {
+    const timForLongOperation = new Date(normalizedDate).getTime();
 
+    const result = today.getTime() - timForLongOperation;
+    const result2 = Math.abs(result / 2);
+    const helper = today.getTime();
+    // console.log(1 - result);
+    return helper - result + result2;
+  };
   if (normalizedDate > normilizedCurrentDate) {
     throw new CreateError(dataError.code, dataError.status);
   }
@@ -36,28 +45,32 @@ const createTransaction = async (req, res, next) => {
   const transactions = await Transaction.find(
     { owner: _id },
     '-createdAt -updatedAt',
-  ).sort({ dataFiltr: +1 });
-
+  ).sort({ dataFiltr: -1 });
+  console.log(normalizedDate < normilizedCurrentDate);
   let currentBalance = 0;
   if (normalizedDate < normilizedCurrentDate) {
+    helper = calc();
+    console.log('долгая');
     currentBalance = await longOperation({
       transactions,
       type,
       amount,
-      filter: timForLongOperation,
+      filter: calc(),
       _id,
     });
   } else {
+    console.log('короткая');
     currentBalance = await calculateCurrentBalance({
       transactions,
       type,
       amount,
     });
+    //
   }
 
   const newTransaction = {
     ...req.body,
-    dataFiltr: today.getTime(),
+    dataFiltr: helper,
     balance: currentBalance || amount,
     owner: req.user._id,
   };
@@ -65,7 +78,6 @@ const createTransaction = async (req, res, next) => {
   await Transaction.create(newTransaction);
   const transactionsList = await getTransactions(_id);
   res.status(created.code).json(transactionsList);
-  res.status(created.code).json('transactionsList');
 };
 
 module.exports = createTransaction;

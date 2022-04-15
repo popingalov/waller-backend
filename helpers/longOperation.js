@@ -6,7 +6,6 @@ const longOperation = async ({ transactions, type, amount, filter }) => {
     badRequest.code,
     'Insufficient funds! Make deposit first to have a positive balance.',
   );
-
   const transactionsLength = transactions.length - 1;
   let lastBalance = 0;
   if (!transactionsLength) {
@@ -17,15 +16,14 @@ const longOperation = async ({ transactions, type, amount, filter }) => {
     }
   }
 
-  //   console.log(transactions);
   let nawBalance = 0;
   let testTime = 1;
   for (let i = 0; i <= transactionsLength; i++) {
-    if (transactions[transactionsLength - i].dataFiltr > filter) {
+    const test = transactionsLength - i;
+    if (transactions[test].dataFiltr > filter) {
       if (testTime === 1) {
-        nawBalance =
-          Number(transactions[transactionsLength + 1 - i]?.balance) || 0;
-        // console.log('error', transactions[transactionsLength + 1 - i]);
+        nawBalance = Number(transactions[test + 1]?.balance) || 0;
+
         if (type === '-') {
           if (nawBalance < amount) {
             throw noPositiveBalanceError;
@@ -33,17 +31,13 @@ const longOperation = async ({ transactions, type, amount, filter }) => {
           console.log('зачем?');
           nawBalance = Number(Number(nawBalance) - Number(amount));
           lastBalance = nawBalance;
-          transactions[transactionsLength - i].balance = nawBalance;
+          transactions[test].balance = nawBalance;
           testTime = amount;
         }
         if (type === '+') {
-          //   nawBalance = Number(Number(nawBalance) + Number(amount));
-
-          lastBalance = nawBalance + Number(amount);
-          console.log('lastBalance', lastBalance);
-          console.log('nawBalance', nawBalance);
-          transactions[transactionsLength - i].balance =
-            lastBalance + transactions[transactionsLength - i].balance.amount;
+          lastBalance = nawBalance > 0 && nawBalance + Number(amount);
+          nawBalance = nawBalance > 0 ? lastBalance : Number(amount);
+          transactions[test - 1].balance = nawBalance + Number(amount);
           testTime = 0;
         }
       }
@@ -51,23 +45,21 @@ const longOperation = async ({ transactions, type, amount, filter }) => {
       if (testTime === 0) {
         if (type === '-') {
           nawBalance = Number(
-            Number(nawBalance) -
-              Number(transactions[transactionsLength - i].amount),
+            Number(nawBalance) - Number(transactions[test].amount),
           );
-          transactions[transactionsLength - i].balance = nawBalance;
+          transactions[test].balance = nawBalance;
         }
         if (type === '+') {
           nawBalance = Number(
-            Number(nawBalance) +
-              Number(transactions[transactionsLength - i].amount),
+            Number(nawBalance) + Number(transactions[test].amount),
           );
-          transactions[transactionsLength - i].balance = nawBalance;
+          transactions[test].balance = nawBalance;
         }
       }
       // transactions.balance = lastBalance;
       const nyy = await Transaction.findByIdAndUpdate(
-        transactions[transactionsLength - i]._id,
-        transactions[transactionsLength - i],
+        transactions[test]._id,
+        transactions[test],
         {
           new: true,
         },
@@ -75,7 +67,7 @@ const longOperation = async ({ transactions, type, amount, filter }) => {
       //   console.log(nyy);
     }
   }
-  //   console.log(lastBalance, 'lastBalance');
+  console.log(lastBalance, 'lastBalance');
   return lastBalance;
 };
 
