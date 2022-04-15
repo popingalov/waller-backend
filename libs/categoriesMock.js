@@ -1,29 +1,38 @@
 const pigLangDefaultCategories = [
   {
     value: 'Основные расходы',
+    type: '+',
   },
   {
     value: 'Продукты',
+    type: '-',
   },
   {
+    type: '-',
     value: 'Машина',
   },
   {
+    type: '-',
     value: 'Забота о себе',
   },
   {
+    type: '-',
     value: 'Забота о детях',
   },
   {
+    type: '-',
     value: 'Товары для дома',
   },
   {
+    type: '-',
     value: 'Образование',
   },
   {
+    type: '-',
     value: 'Досуг',
   },
   {
+    type: '-',
     value: 'Другие расходы',
   },
 ];

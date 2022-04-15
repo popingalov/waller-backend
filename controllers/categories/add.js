@@ -5,14 +5,15 @@ const { created, notFound } = require('../../libs').HTTP_RESPONSES;
 
 const addCategory = async (req, res, next) => {
   const { _id } = req.user;
-  const { value, isEnglishVersion } = req.body;
-  
+  const { value, isEnglishVersion, type } = req.body;
+
   const color = randomColor();
   const newCategory = {
     value,
     color,
+    type,
   };
-  
+
   const [categoryList] = await Category.find({ owner: _id });
 
   if (!categoryList) {

@@ -22,6 +22,11 @@ const categorySchema = new Schema({
     maxlength: 70,
     default: '',
   },
+  type: {
+    type: String,
+    enum: ['-', '+'],
+    required: true,
+  },
   color: {
     type: String,
     maxlength: 7,
@@ -54,6 +59,7 @@ const Category = model('category', categoriesSchema);
 const categoryJoiSchema = Joi.object({
   value: Joi.string().required().max(70),
   color: Joi.string().max(70),
+  type: Joi.string(),
   isEnglishVersion: Joi.boolean().default(false),
 });
 
