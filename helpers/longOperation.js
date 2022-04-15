@@ -20,6 +20,7 @@ const longOperation = async ({ transactions, type, amount, filter }) => {
   let testTime = 1;
   for (let i = 0; i <= transactionsLength; i++) {
     const test = transactionsLength - i;
+    const testType = transactions[test].type;
     if (transactions[test].dataFiltr > filter) {
       if (testTime === 1) {
         nawBalance = Number(transactions[test + 1]?.balance) || 0;
@@ -28,11 +29,10 @@ const longOperation = async ({ transactions, type, amount, filter }) => {
           if (nawBalance < amount) {
             throw noPositiveBalanceError;
           }
-          console.log('зачем?');
-          nawBalance = Number(Number(nawBalance) - Number(amount));
-          lastBalance = nawBalance;
-          transactions[test].balance = nawBalance;
-          testTime = amount;
+          lastBalance = nawBalance > 0 && nawBalance - Number(amount);
+          nawBalance = nawBalance > 0 ? lastBalance : Number(amount);
+          transactions[test - 1].balance = nawBalance - Number(amount);
+          testTime = 0;
         }
         if (type === '+') {
           lastBalance = nawBalance > 0 && nawBalance + Number(amount);
@@ -43,13 +43,13 @@ const longOperation = async ({ transactions, type, amount, filter }) => {
       }
 
       if (testTime === 0) {
-        if (type === '-') {
+        if (testType === '-') {
           nawBalance = Number(
             Number(nawBalance) - Number(transactions[test].amount),
           );
           transactions[test].balance = nawBalance;
         }
-        if (type === '+') {
+        if (testType === '+') {
           nawBalance = Number(
             Number(nawBalance) + Number(transactions[test].amount),
           );
