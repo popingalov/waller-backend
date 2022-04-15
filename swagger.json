@@ -365,6 +365,10 @@
             "description": "User's email",
             "format": "email"
           },
+          "name": {
+            "type": "string",
+            "description": "User's name"
+          },
           "token": {
             "type": "string",
             "description": "User's token"
@@ -429,6 +433,10 @@
           "amount": {
             "type": "number",
             "description": "Transaction amount"
+          },
+          "balance": {
+            "type": "number",
+            "description": "Transaction balance"
           }
         }
       },
