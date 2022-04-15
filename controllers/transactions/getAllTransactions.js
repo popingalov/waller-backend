@@ -1,4 +1,4 @@
-const { getTransactions } = require('../../helpers');
+const { getTransactions, countPagesQuantity } = require('../../helpers');
 const { Transaction } = require('../../models');
 const { ok } = require('../../libs/http-responses');
 
@@ -9,12 +9,13 @@ const getAllTransactions = async (req, res, next) => {
   const allTransactions = await Transaction.find({ owner: _id }, '-createdAt -updatedAt');
   const transactions = await getTransactions(_id, page, limit);
 
-  const currentBalance = allTransactions.at(-1).balance
-  console.log(currentBalance);
+  const currentBalance = allTransactions.at(-1).balance;
+  const pages = countPagesQuantity({allTransactions, limit})  
 
   const responseObj = {
     transactions,
-    currentBalance
+    currentBalance,
+    pages
   }
   
   !transactions ? res.status(ok.code).json([]) : res.status(ok.code).json(responseObj);
