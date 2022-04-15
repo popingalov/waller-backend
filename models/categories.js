@@ -26,6 +26,7 @@ const categorySchema = new Schema({
     type: String,
     enum: ['-', '+'],
     required: true,
+    default: '-',
   },
   color: {
     type: String,
