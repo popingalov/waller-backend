@@ -4,6 +4,7 @@ const getCurrentMonthYear = require('./getCurrentMonthYear');
 const subtractSumPerCategory = require('./subtractSumPerCategory');
 const longOperation = require('./longOperation');
 const getTransactions = require('./getTransactions');
+const countPagesQuantity = require('./countPagesQuantity');
 
 module.exports = {
   authSuccess,
@@ -11,5 +12,6 @@ module.exports = {
   getCurrentMonthYear,
   subtractSumPerCategory,
   longOperation,
-  getTransactions
+  getTransactions,
+  countPagesQuantity
 };
