@@ -67,7 +67,7 @@ const longOperation = async ({ transactions, type, amount, filter }) => {
       //   console.log(nyy);
     }
   }
-  console.log(lastBalance, 'lastBalance');
+  //   console.log(lastBalance, 'lastBalance');
   return lastBalance;
 };
 

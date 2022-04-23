@@ -46,11 +46,11 @@ const createTransaction = async (req, res, next) => {
     { owner: _id },
     '-createdAt -updatedAt',
   ).sort({ dataFiltr: -1 });
-  console.log(normalizedDate < normilizedCurrentDate);
+//   console.log(normalizedDate < normilizedCurrentDate);
   let currentBalance = 0;
   if (normalizedDate < normilizedCurrentDate) {
     helper = calc();
-    console.log('долгая');
+    // console.log('долгая');
     currentBalance = await longOperation({
       transactions,
       type,
@@ -59,7 +59,7 @@ const createTransaction = async (req, res, next) => {
       _id,
     });
   } else {
-    console.log('короткая');
+    // console.log('короткая');
     currentBalance = await calculateCurrentBalance({
       transactions,
       type,

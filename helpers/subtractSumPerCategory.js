@@ -5,13 +5,13 @@ function subtractSumPerCategory(transactions, color) {
     for (const stat of stats) {
       if (stat.category === transaction.category) {
         if (transaction.type === '+') {
-          stat.plus += transaction.amount;
+          stat.value += transaction.amount;
           return stats;
         }
 
-        stat.minus
-          ? (stat.minus += transaction.amount)
-          : (stat.minus = transaction.amount);
+        stat.value
+          ? (stat.value += transaction.amount)
+          : (stat.value = transaction.amount);
         return stats;
       }
     }
@@ -23,27 +23,29 @@ function subtractSumPerCategory(transactions, color) {
         ? {
             color: color[category],
             category,
-            plus: amount,
+            value: amount,
+            type: '+',
           }
         : {
             color: color[category],
             category,
-            minus: amount,
+            value: amount,
+            type: '-',
           };
 
     stats.push(newTransactionStatsObj);
     return stats;
   }, []);
-  console.log(result);
+
   const newResult = result.reduce(
     (acc, curr) => {
-      if (curr.plus) {
+      if (curr.type === '+') {
         acc.plus.push(curr);
-        acc.totalPlus += curr.plus;
+        acc.totalPlus += curr.value;
       }
-      if (curr.minus) {
+      if (curr.type === '-') {
         acc.minus.push(curr);
-        acc.totalMinus += curr.minus;
+        acc.totalMinus += curr.value;
       }
 
       return acc;

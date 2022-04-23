@@ -11,7 +11,7 @@ const getTransactionsStatsByMonthYear = async (req, res, next) => {
     month = correctedCurrentMonth,
     year = currentYear,
     leng = null,
-  } = req.query;
+  } = req.body;
 
   const { _id } = req.user;
 
@@ -32,7 +32,7 @@ const getTransactionsStatsByMonthYear = async (req, res, next) => {
     acc[category.value] = category.color;
     return acc;
   }, {});
-  console.log(transactions);
+  //   console.log(transactions);
   const transactionsStatsObj = subtractSumPerCategory(
     transactions,
     normalizedCategoryList,
