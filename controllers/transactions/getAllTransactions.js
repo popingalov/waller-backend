@@ -4,7 +4,7 @@ const { Transaction } = require('../../models');
 const getAllTransactions = async (req, res, next) => {
   const { page = 1, limit = 6 } = req.query;
   const { _id } = req.user;
-
+  console.log(req.user);
   const allTransactions = await Transaction.find(
     { owner: _id },
     '-createdAt -updatedAt',
