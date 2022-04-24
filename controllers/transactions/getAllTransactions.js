@@ -14,20 +14,20 @@ const getAllTransactions = async (req, res, next) => {
 
   const currentBalance = allTransactions[0].balance;
   const pages = countPagesQuantity({ allTransactions, limit });
-  const yearAndMonth = allTransactions.reduce(
-    (acc, curr) => {
-      const helpMonth = curr.date.slice(3, 5);
-      const helpYear = curr.date.slice(6);
-      if (!acc.month.includes(helpMonth)) {
-        acc.month.push(helpMonth);
-      }
-      if (!acc.year.includes(helpYear)) {
-        acc.year.push(helpYear);
-      }
-      return acc;
-    },
-    { month: [], year: [] },
-  );
+  const yearAndMonth = allTransactions.reduce((acc, curr) => {
+    const helpMonth = curr.date.slice(3, 5);
+    const helpYear = curr.date.slice(6);
+
+    if (!acc[helpYear]) {
+      acc[helpYear] = [];
+    }
+
+    if (!acc[helpYear].includes(helpMonth)) {
+      acc[helpYear].push(helpMonth);
+    }
+
+    return acc;
+  }, {});
 
   const responseObj = {
     transactions,
