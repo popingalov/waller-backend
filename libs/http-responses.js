@@ -7,6 +7,10 @@ const HTTP_RESPONSES = {
     code: 201,
     status: 'created',
   },
+  accepted: {
+    code: 202,
+    status: 'accepted',
+  },
   deleteEl: {
     code: 204,
     status: 'contact deleted',
@@ -25,7 +29,7 @@ const HTTP_RESPONSES = {
   },
   wrongData: {
     code: 401,
-    status: "Email or password is wrong",
+    status: 'Email or password is wrong',
   },
   badAuth: {
     code: 401,
@@ -33,7 +37,7 @@ const HTTP_RESPONSES = {
   },
   notVerify: {
     code: 401,
-    status: "Email not verify",
+    status: 'Email not verify',
   },
   notFound: {
     code: 404,
@@ -41,11 +45,11 @@ const HTTP_RESPONSES = {
   },
   dataError: {
     code: 407,
-    status: 'Wrong date'
+    status: 'Wrong date',
   },
   inUse: {
     code: 409,
-    status: 'Email in use'
+    status: 'Email in use',
   },
   сonflict: {
     code: 409,
