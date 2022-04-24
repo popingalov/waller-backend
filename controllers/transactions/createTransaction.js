@@ -3,7 +3,7 @@ const CreateError = require('http-errors');
 const { created } = require('../../libs/http-responses');
 const { Transaction } = require('../../models');
 const { calculateCurrentBalance, longOperation } = require('../../helpers');
-const { getTransactions } = require('../../helpers');
+const { getTransactions, countPagesQuantity } = require('../../helpers');
 const { dataError } = require('../../libs').HTTP_RESPONSES;
 
 const createTransaction = async (req, res, next) => {
@@ -35,13 +35,16 @@ const createTransaction = async (req, res, next) => {
     const result = today.getTime() - timForLongOperation;
     const result2 = Math.abs(result / 2);
     const helper = today.getTime();
-    // console.log(1 - result);
     return helper - result + result2;
   };
   if (normalizedDate > normilizedCurrentDate) {
     throw new CreateError(dataError.code, dataError.status);
   }
 
+  const allTransactions = await Transaction.find(
+    { owner: _id },
+    '-createdAt -updatedAt',
+  )
   const transactions = await Transaction.find(
     { owner: _id },
     '-createdAt -updatedAt',
@@ -68,6 +71,8 @@ const createTransaction = async (req, res, next) => {
     //
   }
 
+  const pages = countPagesQuantity({ allTransactions });
+
   const newTransaction = {
     ...req.body,
     dataFiltr: helper,
@@ -77,7 +82,13 @@ const createTransaction = async (req, res, next) => {
 
   await Transaction.create(newTransaction);
   const transactionsList = await getTransactions(_id);
-  res.status(created.code).json(transactionsList);
+
+  const responseObj = {
+    transactionsList,
+    pages,
+  };
+
+  res.status(created.code).json(responseObj);
 };
 
 module.exports = createTransaction;

@@ -1,4 +1,4 @@
-const countPagesQuantity = ({allTransactions, limit}) => {
+const countPagesQuantity = ({allTransactions, limit = 6}) => {
   return allTransactions.length / limit
 };
 
