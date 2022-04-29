@@ -12,7 +12,7 @@ const getTransactionsStatsByMonthYear = async (req, res, next) => {
     year = currentYear,
     leng = null,
   } = req.body;
-
+  console.log(year, month);
   const { _id } = req.user;
 
   const regExpMonthYear = new RegExp(`^\\d{2}\\.${month}\\.${year}$`);
