@@ -44,12 +44,12 @@ const createTransaction = async (req, res, next) => {
   const allTransactions = await Transaction.find(
     { owner: _id },
     '-createdAt -updatedAt',
-  )
+  );
   const transactions = await Transaction.find(
     { owner: _id },
     '-createdAt -updatedAt',
   ).sort({ dataFiltr: -1 });
-//   console.log(normalizedDate < normilizedCurrentDate);
+  //   console.log(normalizedDate < normilizedCurrentDate);
   let currentBalance = 0;
   if (normalizedDate < normilizedCurrentDate) {
     helper = calc();
